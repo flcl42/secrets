@@ -4,16 +4,16 @@ import time
 import os
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 9001
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        with open('/secret/secret.txt') as f:
-            lines = f.readlines()
+        with open('./secret-files/prod.txt') as f:
+            lines = f.read()
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<html><head><title>Secret secrets, which are very secret</title></head>", "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))
         self.wfile.write(bytes("<p>This server displays a secret from a file: " + lines + " and from the environement[SECRET]: " + os.environ['SECRET'] + ".</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
